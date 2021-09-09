@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ten_dp">@dimen/_9sdp</dimen>
+    <dimen name="single_and_half_margin">@dimen/_19sdp</dimen>
+    <dimen name="triple_margin">@dimen/_42sdp</dimen>
+    <dimen name="double_margin">@dimen/_28sdp</dimen>
+    <dimen name="half_margin">@dimen/_11sdp</dimen>
+    <dimen name="single_margin">@dimen/_13sdp</dimen>
+    <dimen name="btn_width">@dimen/_100sdp</dimen>
+    <dimen name="corner">@dimen/_12sdp</dimen>
+</resources>
