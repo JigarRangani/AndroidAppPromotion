@@ -15,7 +15,10 @@
         android:id="@+id/mainView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/layout_rounded_white">
 
         <TextView
@@ -23,11 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_15sdp"
             android:background="@drawable/ads"
+
             android:gravity="center"
-            android:paddingHorizontal="@dimen/_2sdp"
+            android:paddingHorizontal="@dimen/_3sdp"
             android:text="@string/ad"
-            android:textSize="@dimen/_9sdp"
             android:textColor="#fff"
+            android:textSize="@dimen/_9sdp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,9 +54,9 @@
             android:id="@+id/imgRecommendedApp"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
-            android:scaleType="centerCrop"
             android:layout_marginTop="@dimen/_13sdp"
             android:animateLayoutChanges="true"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"

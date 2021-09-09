@@ -230,8 +230,8 @@ fun AlertDialog.onPositive(
                             Intent.FLAG_ACTIVITY_MULTIPLE_TASK
                 )
                 try {
-                    context.startActivity(goToMarket)
                     setDataInArrayList(packageName)
+                    context.startActivity(goToMarket)
                     dismiss()
                 } catch (e: ActivityNotFoundException) {
                     context.startActivity(
