@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        binding.promotionView.setDownloadListener(this)
         initView()
 
 
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     fun initView() {
         binding.button.setOnClickListener {
             PromotionDialog.build(this)?.let {
-             it.callApi("com.valora.indianartical")
+             it.callApi("com.valora.indianartical1")
             }
         }
     }

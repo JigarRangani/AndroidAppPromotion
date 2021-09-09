@@ -271,6 +271,7 @@ fun AlertDialog.onNegative(
         }
         noButton.setOnClickListener {
             action?.invoke()
+            preferenceManager.counter += 1
             dismiss()
         }
     }
@@ -290,50 +291,62 @@ fun AlertDialog.callApi(packageName: String): AlertDialog {
             when {
                 response.code() in 200..399 -> {
                     if (!response.body()?.data.isNullOrEmpty()) {
-                        Log.e(TAG, "00onResponse code==${response.body()!!.data!![0].promotionAppList!![0].promotionAppImgUrl}")
+                        Log.e(
+                            TAG,
+                            "00onResponse code==${response.body()!!.data!![0].promotionAppList!![0].promotionAppImgUrl}"
+                        )
                         response.body()!!.data!![0].let {
                             if (preferenceManager.promotionList.trim().isEmpty()) {
+                                Log.e("if promotionList", preferenceManager.promotionList)
                                 result = mutableListOf()
                                 it.promotionAppList!!.sortBy { it.promotionAppPriority }
                                 priorityList = it.promotionAppList!!
-                                isAlertShow= true
+                                isAlertShow = true
                             } else {
-                                result = preferenceManager.promotionList.split(",").map { it -> it.trim() }
+                                result = preferenceManager.promotionList.split(",")
+                                    .map { it -> it.trim() }
+                                Log.e("else promotionList", preferenceManager.promotionList)
                                 it.promotionAppList!!.sortBy { it.promotionAppPriority }
                                 priorityList = mutableListOf()
-                                out@ for (i in result.indices) {
-                                    for (j in it.promotionAppList!!.indices) {
-                                        if (result[i] == it.promotionAppList!![j].promotionAppPackageName) {
-                                            Log.e("i =$i  j=$j","result[$i]= ${result[i]}")
-                                            Log.e("i =$i  j=$j","promotionAppList[$j].promotionAppPackageName= ${it.promotionAppList!![j].promotionAppPackageName}")
-                                        break
-                                        } else {
-                                            Log.e("i =$i  j=$j","result[$i]= ${result[i]}")
-                                            Log.e("i =$i  j=$j","promotionAppList[$j].promotionAppPackageName= ${it.promotionAppList!![j].promotionAppPackageName}")
-                                            priorityList.add(it.promotionAppList!![j])
-                                            isAlertShow = true
+                                out@ for (i in it.promotionAppList!!.indices) {
+                                    var isContain = false
+                                    for (j in result.indices) {
+                                        if (it.promotionAppList!![i].promotionAppPackageName == result[j]) {
+                                            Log.e(
+                                                "not add",
+                                                it.promotionAppList!![i].promotionAppPackageName!!
+                                            )
+                                            isContain = true
+                                            break
                                         }
+                                    }
+                                    if (!isContain) {
+                                        Log.e(
+                                            "contain",
+                                            it.promotionAppList!![i].promotionAppPackageName!!
+                                        )
+                                        priorityList.add(it.promotionAppList!![i])
+                                        isAlertShow = true
                                     }
                                 }
                             }
 
 
                             if (isAlertShow) {
-                                //  if (it.promotionAppList!!.size >= result.size) {
-                                Log.e(TAG, "11onResponse code==${response.code()}")
                                 binding.run {
-                                    Log.e(TAG, "22onResponse code==${response.code()}")
-                                    if (!it.promotionAppList.isNullOrEmpty()) {
+                                    if (!priorityList.isNullOrEmpty()) {
+                                        var index = 0
+                                        if (preferenceManager.counter <= priorityList.size - 1) {
+                                            index = preferenceManager.counter
+                                        } else {
+                                            preferenceManager.counter = 0
+                                            index = preferenceManager.counter
+                                        }
+                                        //TODO: in case you need to do something when dialog show first time
                                         if (preferenceManager.firstRun) {
-                                            this@callApi.onPositive(
-                                                priorityList[0].promotionDialogButtonName
-                                                    ?: "Download",
-                                                packageName = priorityList[0].promotionAppPackageName
-                                            )
                                         } else {
                                             preferenceManager.firstRun = true
                                         }
-                                        val index = 0
                                         if (!priorityList.isNullOrEmpty()) {
                                             this@callApi.title(
                                                 priorityList[index].promotionTitle
@@ -349,61 +362,26 @@ fun AlertDialog.callApi(packageName: String): AlertDialog {
                                             this@callApi.onPositive(
                                                 priorityList[index].promotionDialogButtonName
                                                     ?: "Download",
-                                                packageName = priorityList[0].promotionAppPackageName
+                                                packageName = priorityList[index].promotionAppPackageName
                                             )
                                             this@callApi.onNegative("Cancel")
                                             this@callApi.show()
                                         }
                                     }
                                 }
-//                                    } else {
-//                                        this@callApi.hide()
-//                                return this@callApi.dismiss()
                             }
 
                         }
-
-//                    onSuccess(response.body())
-//                    sharedPrefsHelper.checkAndChangeTocken(response.headers())
                     }
                 }
                 response.code() == 404 -> {
                     this@callApi.hide()
-//                    binding.noButton.setOnClickListener {
-//                        dismiss()
-//                    }
-//                    val gson = Gson()
-//                    val errorEntity: ErrorEntity? = gson.fromJson(
-//                        response.errorBody()!!.charStream(),
-//                        ErrorEntity::class.java
-//                    )
-//                    errorEntity?.let { notFound(it) }
                 }
                 response.code() == 401 -> {
-//                    binding.noButton.setOnClickListener {
-//                        dismiss()
-//                    }
                     this@callApi.hide()
-//                    if (!sharedPrefsHelper.getToken().isNullOrEmpty()) {
-//                        BaseApplication.currentActivity()?.let {
-//                            CommonLogoutDialog().show(
-//                                it.supportFragmentManager,
-//                                CommonLogoutDialog.TAG
-//                            )
-//                        }
-//                    }
                 }
                 else -> {
                     this@callApi.hide()
-//                    binding.noButton.setOnClickListener {
-//                        dismiss()
-//                    }
-//                    val gson = Gson()
-//                    val errorEntity: ErrorEntity? = gson.fromJson(
-//                        response.errorBody()!!.charStream(),
-//                        ErrorEntity::class.java
-//                    )
-//                    errorEntity?.let { onError(it) }
                 }
             }
 
@@ -412,43 +390,6 @@ fun AlertDialog.callApi(packageName: String): AlertDialog {
         override fun onFailure(call: Call<PromotionResponse>, t: Throwable) {
             Log.e(TAG, "onFailure == ${t.printStackTrace()}")
             this@callApi.hide()
-//            break this@callApi;
-//            binding.run {
-//                    tvTitle.text = "fgdfgfdgd"
-//
-//                tvSubtitle.text = "ssdfsfsf"
-////                            imgRecommendedApp.background = it.promotionAppList!![0].
-//                yesButton.text = "download"
-//
-//                Glide
-//                    .with(context)
-//                    .load(R.drawable.ic_placeholder)
-//                    .centerCrop()
-//                    .placeholder(R.drawable.ic_placeholder)
-//                    .into(imgRecommendedApp)
-//
-//                binding.yesButton.setOnClickListener {
-//                    val uri: Uri = Uri.parse("market://details?id=$packageName")
-//                    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-//                    // To count with Play market backstack, After pressing back button,
-//                    // to taken back to our application, we need to add following flags to intent.
-//                    goToMarket.addFlags(
-//                        Intent.FLAG_ACTIVITY_NO_HISTORY or
-//                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-//                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-//                    )
-//                    try {
-//                        context.startActivity(goToMarket)
-//                    } catch (e: ActivityNotFoundException) {
-//                        context.startActivity(
-//                            Intent(
-//                                Intent.ACTION_VIEW,
-//                                Uri.parse("http://play.google.com/store/apps/details?id=$packageName")
-//                            )
-//                        )
-//                    }
-//                }
-//            }
 
         }
 
@@ -457,32 +398,12 @@ fun AlertDialog.callApi(packageName: String): AlertDialog {
 }
 
 fun setDataInArrayList(appId: String) {
-    preferenceManager.promotionList += "$appId,"
-    preferenceManager.counter += 1
-//    if (!data.isNullOrEmpty() && !data[0].promotionAppList.isNullOrEmpty()) {
-//        for (i in data[0].promotionAppList!!.indices) {
-//            val list = arrayListOf<String>()
-//            list.add(data[0].promotionAppList!![i].promotionAppPackageName!!)
-//        }
-//    }
+    if (preferenceManager.promotionList.isEmpty()) {
+        preferenceManager.promotionList += appId
+    } else {
+        preferenceManager.promotionList += ",$appId"
+    }
 }
-
-//fun saveArrayList(list: ArrayList<String>?, key: String?, activity: Activity) {
-//    val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-//    val editor: SharedPreferences.Editor = prefs.edit()
-//    val gson = Gson()
-//    val json: String = gson.toJson(list)
-//    editor.putString(key, json)
-//    editor.apply()
-//}
-//
-//fun getArrayList(key: String?, activity: Activity): ArrayList<String>? {
-//    val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-//    val gson = Gson()
-//    val json: String? = prefs.getString(key, null)
-//    val type: Type = object : TypeToken<ArrayList<String?>?>() {}.type
-//    return gson.fromJson(json, type)
-//}
 
 private fun View.show() {
     this.visibility = View.VISIBLE
