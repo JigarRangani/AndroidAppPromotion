@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
-apply from: "$rootDir/gradle-mvn-push.gradle"
 
 android {
     compileSdk 31
