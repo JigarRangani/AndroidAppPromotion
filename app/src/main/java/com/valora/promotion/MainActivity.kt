@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-    fun initView() {
+    private fun initView() {
         binding.button.setOnClickListener {
             PromotionDialog.build(this)?.let {
              it.callApi("com.valora.indianartical1")
