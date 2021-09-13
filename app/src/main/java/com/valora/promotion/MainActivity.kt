@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         binding.button.setOnClickListener {
             PromotionDialog.build(this)?.let {
+
+
+
              it.callApi("com.valora.indianartical1")
             }
         }
