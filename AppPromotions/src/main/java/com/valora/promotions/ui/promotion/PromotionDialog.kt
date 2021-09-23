@@ -1,4 +1,4 @@
-package com.valora.promotions.ui
+package com.valora.promotions.ui.promotion
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -19,11 +19,11 @@ import com.valora.promotions.databinding.AppPromotionDialogBinding
 import com.valora.promotions.network.ApiServices
 import com.valora.promotions.response.Promotion
 import com.valora.promotions.response.PromotionResponse
-import com.valora.promotions.ui.PromotionDialog.Companion.TAG
-import com.valora.promotions.ui.PromotionDialog.Companion.binding
-import com.valora.promotions.ui.PromotionDialog.Companion.preferenceManager
-import com.valora.promotions.ui.PromotionDialog.Companion.priorityList
-import com.valora.promotions.ui.PromotionDialog.Companion.result
+import com.valora.promotions.ui.promotion.PromotionDialog.Companion.TAG
+import com.valora.promotions.ui.promotion.PromotionDialog.Companion.binding
+import com.valora.promotions.ui.promotion.PromotionDialog.Companion.preferenceManager
+import com.valora.promotions.ui.promotion.PromotionDialog.Companion.priorityList
+import com.valora.promotions.ui.promotion.PromotionDialog.Companion.result
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -56,7 +56,7 @@ class PromotionDialog {
             binding = AppPromotionDialogBinding.inflate(layoutInflater)
             val alertDialog =
                 AlertDialog.Builder(
-                    context, R.style.full_screen_dialog
+                    context, R.style.promotion_dialog
                 )
                     .setView(binding.root)
             val alert: AlertDialog = alertDialog.create()
@@ -66,6 +66,7 @@ class PromotionDialog {
 //            alert.window?.attributes?.windowAnimations = R.style.SlidingDialogAnimation
             return alert
         }
+
     }
 
 }
@@ -163,7 +164,7 @@ fun AlertDialog.icon(
 }
 
 /***
- * Icon of  Alert Dialog
+ * Image of  Alert Dialog
  * */
 fun AlertDialog.networkImage(
     imgUrl: String?,
@@ -262,6 +263,7 @@ fun AlertDialog.onNegative(
 ): AlertDialog {
     binding.run {
         noButton.show()
+
         noButton.text = text.trim()
         if (textColor != null) {
             noButton.setTextColor(textColor)
@@ -278,8 +280,8 @@ fun AlertDialog.onNegative(
     return this
 }
 
-fun AlertDialog.callApi(packageName: String): AlertDialog {
-    val apiServices = ApiServices.create().getAppPromotionData(packageName)
+fun AlertDialog.callApi(packageName: String, version: String, platform: String): AlertDialog {
+    val apiServices = ApiServices.create().getAppPromotionData(packageName, version, platform)
     apiServices.enqueue(object : retrofit2.Callback<PromotionResponse> {
 
         override fun onResponse(

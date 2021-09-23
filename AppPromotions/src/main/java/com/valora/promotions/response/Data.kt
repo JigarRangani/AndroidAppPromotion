@@ -22,7 +22,19 @@ class Data {
     var appPackageName: String? = null
 
     @Expose
-    @SerializedName("img")
-    var appImgUrl: String? = null
+    @SerializedName("App_Update__Android")
+    var appUpdateAndroid: Boolean? = null
+
+    @Expose
+    @SerializedName("App_ForcefullyUpdate_Android")
+    var appForcefullyUpdateAndroid: Boolean? = null
+
+    @Expose
+    @SerializedName("App_Update__Ios")
+    var appUpdateIos: Boolean? = null
+
+    @Expose
+    @SerializedName("App_ForcefullyUpdate_Ios")
+    var appForcefullyUpdateIos: Boolean? = null
 
 }

@@ -3,8 +3,12 @@ package com.valora.promotion
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.valora.promotion.databinding.ActivityMainBinding
-import com.valora.promotions.ui.PromotionDialog
-import com.valora.promotions.ui.callApi
+import com.valora.promotions.ui.promotion.PromotionDialog
+import com.valora.promotions.ui.promotion.callApi
+import com.valora.promotions.ui.rate.RateDialog
+import com.valora.promotions.ui.rate.showRateDialog
+import com.valora.promotions.ui.update.UpdateDialog
+import com.valora.promotions.ui.update.checkUpdate
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,15 +22,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        binding.button.setOnClickListener {
+        binding.btnPromotion.setOnClickListener {
             PromotionDialog.build(this)?.let {
+                it.callApi("5", "1.0", "android")
+            }
+        }
+
+        binding.btnRate.setOnClickListener {
+            RateDialog.build(this)?.let {
+                it.showRateDialog("com.valora.indianartical",this)
+            }
+        }
 
 
-
-             it.callApi("com.valora.indianartical1")
+        binding.btnUpdate.setOnClickListener {
+            UpdateDialog.build(this)?.let {
+                it.checkUpdate("5", "1.0", "android")
             }
         }
     }
-
-
 }

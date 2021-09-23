@@ -10,7 +10,9 @@ interface ApiServices {
 
     @GET(ApiEndPoint.PROMOTION)
     fun getAppPromotionData(
-        @Query("app_id") app_id:String
+        @Query("app_id") app_id: String,
+        @Query("version") version: String,
+        @Query("plateform") plateform: String
     ): Call<PromotionResponse>
 
     companion object {

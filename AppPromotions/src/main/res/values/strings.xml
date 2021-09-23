@@ -5,4 +5,8 @@
     <string name="go">Download</string>
     <string name="cancel">Cancel</string>
     <string name="ad">AD</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="rate_now">Rate now</string>
+    <string name="later">Later</string>
+    <string name="please_rate_us">Please, rate us !!</string>
 </resources>

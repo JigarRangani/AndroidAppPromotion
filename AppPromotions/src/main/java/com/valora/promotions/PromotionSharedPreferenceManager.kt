@@ -10,7 +10,8 @@ class PromotionSharedPreferenceManager constructor(context: Context) {
     private val IS_FIRST_RUN_PREF = Pair("is_first_run", false)
     private val COUNTER = Pair("counter", 0)
     private val APP_LIST = Pair("promotionApp", "")
-
+    private val COUNTER_RATE = Pair("counterRate", 0)
+    private val IS_RATED = Pair("rate", false)
 
     val prefs = context.getSharedPreferences(NAME, MODE)
 
@@ -38,8 +39,20 @@ class PromotionSharedPreferenceManager constructor(context: Context) {
         set(value) = prefs.edit {
             it.putInt(COUNTER.first, value)
         }
+    var counterRate: Int
+        get() = prefs.getInt(COUNTER_RATE.first, COUNTER_RATE.second)
+        set(value) = prefs.edit {
+            it.putInt(COUNTER_RATE.first, value)
+        }
+    var isRated: Boolean
+        get() = prefs.getBoolean(IS_RATED.first, IS_RATED.second)
+        set(value) = prefs.edit {
+            it.putBoolean(IS_RATED.first, value)
+        }
 
     fun deleteAll() {
         prefs.edit().clear().apply()
     }
+
+
 }
