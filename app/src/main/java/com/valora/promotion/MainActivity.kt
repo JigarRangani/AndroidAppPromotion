@@ -9,6 +9,8 @@ import com.valora.promotions.ui.rate.RateDialog
 import com.valora.promotions.ui.rate.showRateDialog
 import com.valora.promotions.ui.update.UpdateDialog
 import com.valora.promotions.ui.update.checkUpdate
+import com.valora.promotions.ui.web.ValoraWebView
+import com.valora.promotions.ui.web.WebViewHandler
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initView()
     }
+
 
     private fun initView() {
         binding.btnPromotion.setOnClickListener {
@@ -38,6 +41,18 @@ class MainActivity : AppCompatActivity() {
         binding.btnUpdate.setOnClickListener {
             UpdateDialog.build(this)?.let {
                 it.checkUpdate("5", "1.0", "android")
+            }
+        }
+
+        binding.run {
+            btnPrivacy.setOnClickListener {
+                WebViewHandler.Builder(this@MainActivity).openPrivacy("5","1.0","android")
+            }
+        }
+
+        binding.run {
+            btnTerms.setOnClickListener {
+                WebViewHandler.Builder(this@MainActivity).openTerms("5","1.0","android")
             }
         }
     }

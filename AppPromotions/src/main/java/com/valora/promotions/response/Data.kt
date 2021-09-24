@@ -17,6 +17,15 @@ class Data {
     @SerializedName("url")
     var appUrl: String? = null
 
+    @SerializedName("offers")
+    val offers: List<String>? = null
+
+    @SerializedName("privacy_policy")
+    val privacyPolicy: String? = null
+
+    @SerializedName("terms_and_conditions")
+    val termsAndConditions: String? = null
+
     @Expose
     @SerializedName("app_id")
     var appPackageName: String? = null
