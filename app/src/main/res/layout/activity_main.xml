@@ -7,22 +7,34 @@
     tools:context=".MainActivity">
 
 
+    <com.valora.promotions.ui.carousal.OfferSlider
+        android:id="@+id/offerSlider"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnPromotion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:offer_show_delay="5000" />
+
     <Button
         android:id="@+id/btnPromotion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check Promotion dialog"
+        android:text="@string/check_promotion_dialog"
         app:layout_constraintBottom_toTopOf="@+id/btnUpdate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toBottomOf="@+id/offerSlider" />
+
 
     <Button
         android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check Update dialog"
+        android:text="@string/check_update_dialog"
         app:layout_constraintBottom_toTopOf="@+id/btnRate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,31 +44,41 @@
         android:id="@+id/btnRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check Rate dialog"
+        android:text="@string/check_rate_dialog"
         app:layout_constraintBottom_toTopOf="@+id/btnPrivacy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnUpdate" />
 
     <Button
+        android:id="@+id/btnPrivacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_privacy"
+        app:layout_constraintBottom_toTopOf="@+id/btnTerms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRate" />
+
+    <Button
         android:id="@+id/btnTerms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Terms"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/open_terms"
+        app:layout_constraintBottom_toTopOf="@+id/openOffer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPrivacy" />
 
     <Button
-        android:id="@+id/btnPrivacy"
+        android:id="@+id/openOffer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Privacy"
-        app:layout_constraintBottom_toTopOf="@+id/btnTerms"
+        android:text="@string/open_offer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRate" />
+        app:layout_constraintTop_toBottomOf="@+id/btnTerms" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,6 +64,9 @@ dependencies {
     //slider
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
+    //size
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
     //firebase
     implementation 'com.google.firebase:firebase-analytics:19.0.1'
     implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
